@@ -16,7 +16,7 @@ Source1:	http://joy.sophics.cz/www/xf25.zip
 Source2:	%{name}-chooser
 URL:		http://atari800.atari.org/
 BuildRequires:	unzip
-%ifarch %{ix86} ppc
+%ifarch %{ix86} alpha ppc
 %{!?_without_svgalib:BuildRequires:	svgalib-devel}
 %endif
 BuildRequires:	XFree86-devel
@@ -124,7 +124,7 @@ obs³ug± d¼wiêku i joysticka.
 cd src
 
 %if %{?_without_svgalib:0}%{!?_without_svgalib:1}
-%ifarch %{ix86} ppc
+%ifarch %{ix86} alpha ppc
 
 %configure2_13 --target=svgalib \
 	--disable-VERY_SLOW \
@@ -217,7 +217,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_xbindir}} \
 	$RPM_BUILD_ROOT{%{_datadir}/atari800,%{_mandir}/man1}
 
-%ifarch %{ix86} ppc
+%ifarch %{ix86} alpha ppc
 %{!?_without_svgalib:install src/atari800-svga $RPM_BUILD_ROOT%{_bindir}}
 %endif
 install src/atari800-x11 $RPM_BUILD_ROOT%{_xbindir}
@@ -257,7 +257,7 @@ unzip -q -L xf25.zip
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_xbindir}/atari800-SDL
 
-%ifarch %{ix86} ppc
+%ifarch %{ix86} alpha ppc
 %if %{?_without_svgalib:0}%{!?_without_svgalib:1}
 %files svga
 %defattr(644,root,root,755)
