@@ -6,15 +6,14 @@
 Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
 Name:		Atari800
-Version:	1.2.2
-Release:	3
+Version:	1.2.3
+Release:	1
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/atari800/atari800-%{version}.tar.gz
 # NOTE: ROMs probably can be redistributed only in original XF25 archive
 Source1:	http://joy.sophics.cz/www/xf25.zip
 Source2:	%{name}-chooser
-Patch0:		%{name}-shm_fix.patch
 URL:		http://atari800.atari.org/
 BuildRequires:	unzip
 %ifarch %{ix86} ppc
@@ -120,7 +119,6 @@ obs³ug± d¼wiêku i joysticka.
 
 %prep
 %setup -q -n atari800-%{version}
-%patch0 -p1
 
 %build
 cd src
