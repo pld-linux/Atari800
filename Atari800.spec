@@ -5,19 +5,17 @@
 Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
 Name:		Atari800
-%define		ver_short	120
-Version:	1.2.0
-Release:	3
+Version:	1.2.2
+Release:	1
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Group(de):	Applikationen/Emulators
 Group(pl):	Aplikacje/Emulatory
-Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/atari800/a800s%{ver_short}.tgz
+Source0:	http://prdownloads.sourceforge.new/projects/atari800/atari800-%{version}.tar.gz
 # NOTE: ROMs probably can be redistributed only in original XF25 archive
 Source1:	http://joy.sophics.cz/www/xf25.zip
 Source2:	%{name}-chooser
 Patch0:		%{name}-shm_fix.patch
-Patch1:		%{name}-joystick.patch
 URL:		http://atari800.atari.org/
 BuildRequires:	unzip
 BuildRequires:	svgalib-devel
@@ -128,16 +126,13 @@ Ten pakiet zawiera wykonywalny plik emulatora skonfigurowany dla SDL z
 obs³ug± d¼wiêku i joysticka.
 
 %prep
-%setup -q -n %{name}
+%setup -q -n atari800-%{version}
 %patch0 -p1
-%patch1 -p1
 
 %build
 cd src
 
-autoheader
-autoconf
-%configure --target=svgalib \
+%configure2_13 --target=svgalib \
 	--disable-VERY_SLOW \
 	--enable-NO_CYCLE_EXACT \
 	--enable-CRASH_MENU \
@@ -168,7 +163,7 @@ mv -f atari800 atari800-svga
 
 %{__make} clean
 
-%configure --target=sdl \
+%configure2_13 --target=sdl \
 	--disable-VERY_SLOW \
 	--enable-NO_CYCLE_EXACT \
 	--enable-CRASH_MENU \
@@ -194,7 +189,7 @@ mv -f atari800 atari800-svga
 	LDFLAGS="%{rpmldflags} -L/usr/X11R6/lib"
 mv -f atari800 atari800-SDL
 
-%configure --target=x11-shm \
+%configure2_13 --target=x11-shm \
 	--disable-VERY_SLOW \
 	--enable-NO_CYCLE_EXACT \
 	--enable-CRASH_MENU \
@@ -240,7 +235,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/atari800
 %endif
 
 gzip -9nf DOC/{BUGS,CHANGES,CREDITS,FAQ,README,TODO,USAGE} README.1ST \
-	DOC/{LPTjoy.txt,cart.txt,emuos.txt,pokeysnd.txt,usage1}
+	DOC/{LPTjoy.txt,cart.txt,emuos.txt,pokeysnd.txt}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
