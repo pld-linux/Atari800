@@ -1,13 +1,13 @@
 #
 # Conditional build:
-# _with_license_agreement	- with unzipped ROM files instead of xf25.zip
-# _without_svga			- without SVGA version
-#
+%bcond_with license_agreement   # with unzipped ROM files instead of xf25.zip
+%bcond_without svga 		# without SVGA version
+
 Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
 Name:		Atari800
 Version:	1.3.1
-Release:	2
+Release:	3
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Source0:	http://dl.sourceforge.net/atari800/atari800-%{version}.tar.gz
@@ -20,7 +20,9 @@ URL:		http://atari800.atari.org/
 BuildRequires:	SDL-devel
 BuildRequires:	XFree86-devel
 %ifarch %{ix86} alpha ppc
-%{!?_without_svga:BuildRequires:	svgalib-devel}
+%if %{with svga}
+BuildRequires:	svgalib-devel
+%endif
 %endif
 BuildRequires:	unzip
 BuildRequires:	zlib-devel
@@ -39,28 +41,31 @@ Summary:	Atari 800 Emulator - common files for svgalib and X11 versions
 Summary(pl):	Emulator Atari 800 - pliki wspólne dla wersji svgalib oraz X11
 Group:		Applications/Emulators
 Obsoletes:	Atari800
-%{!?_with_license_agreement:Prereq:	unzip}
+%if ! %{with license_agreement}
+Prereq:	unzip
+%endif
 
 %description common
 This is Atari 800, 800XL, 130XE and 5200 emulator.
 
 This package contains common files for both svgalib and X11 versions
 of Atari800.
-
-%{!?_with_license_agreement:Note: because of license problems we had to include whole X-Former}
-%{!?_with_license_agreement:archive (xf25.zip). If you don't want it - rebuild Atari800 by:}
-%{!?_with_license_agreement:rpm --rebuild --with license_agreement ftp://ftp.pld-linux.org/PLD-1.0/SRPMS/SRPMS/%{name}-%{version}-%{release}.src.rpm}
+%if ! %{with license_agreement}
+Note: because of license problems we had to include whole X-Former
+archive (xf25.zip). If you don't want it - rebuild Atari800 (--with 
+license_agreement)
+%endif 
 
 %description common -l pl
 To jest emulator Atari 800, 800XL, 130XE i 5200.
 
 Ten pakiet zawiera pliki wspólne dla wersji dzia³aj±cych pod svgalib
 oraz X11.
-
-%{!?_with_license_agreement:Uwaga: z powodu problemów z licencj± musieli¶my za³±czyæ ca³± paczkê}
-%{!?_with_license_agreement:z emulatorem X-Former (xf25.zip). Je¶li jej nie chcesz w pakiecie -}
-%{!?_with_license_agreement:przebuduj pakiet poleceniem:}
-%{!?_with_license_agreement:rpm --rebuild --with license_agreement ftp://ftp.pld-linux.org/PLD-1.0/SRPMS/SRPMS/%{name}-%{version}-%{release}.src.rpm}
+%if ! %{with license_agreement}
+Uwaga: z powodu problemów z licencj± musieli¶my za³±czyæ ca³± paczkê
+z emulatorem X-Former (xf25.zip). Je¶li jej nie chcesz w pakiecie -
+przebuduj pakiet z opcja --with license_agreement.
+%endif
 
 %package svga
 Summary:	Atari 800 Emulator - svgalib version
@@ -126,7 +131,8 @@ obs³ug± d¼wiêku i joysticka.
 cd src
 
 CFLAGS="%{rpmcflags}"
-%if %{?_without_svga:0}%{!?_without_svga:1}
+
+%if %{with svga}
 %ifarch %{ix86} alpha ppc
 
 %configure \
@@ -218,14 +224,16 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/atari800,%{_mandir}/man1}
 
 %ifarch %{ix86} alpha ppc
-%{!?_without_svga:install src/atari800-svga $RPM_BUILD_ROOT%{_bindir}}
+%if %{with svga}
+install src/atari800-svga $RPM_BUILD_ROOT%{_bindir}
+%endif
 %endif
 install src/atari800-x11 $RPM_BUILD_ROOT%{_bindir}
 install src/atari800-SDL $RPM_BUILD_ROOT%{_bindir}
 install %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/atari800
 install src/atari800.man $RPM_BUILD_ROOT%{_mandir}/man1/atari800.1
 
-%if %{?_with_license_agreement:1}%{!?_with_license_agreement:0}
+%if %{with license_agreement}
 unzip -q -L %{SOURCE1} -d $RPM_BUILD_ROOT%{_datadir}/atari800
 rm -f $RPM_BUILD_ROOT%{_datadir}/atari800/xf25.*
 %else
@@ -235,7 +243,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/atari800
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%if %{?_with_license_agreement:0}%{!?_with_license_agreement:1}
+%if ! %{with license_agreement}
 %post common
 cd %{_datadir}/atari800
 unzip -q -L xf25.zip
@@ -258,7 +266,7 @@ unzip -q -L xf25.zip
 %attr(755,root,root) %{_bindir}/atari800-SDL
 
 %ifarch %{ix86} alpha ppc
-%if %{?_without_svga:0}%{!?_without_svga:1}
+%if %{with svga}
 %files svga
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/atari800-svga
