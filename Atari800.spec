@@ -7,7 +7,7 @@ Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
 Name:		Atari800
 Version:	1.2.2
-Release:	2
+Release:	3
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/atari800/atari800-%{version}.tar.gz
@@ -17,7 +17,7 @@ Source2:	%{name}-chooser
 Patch0:		%{name}-shm_fix.patch
 URL:		http://atari800.atari.org/
 BuildRequires:	unzip
-%ifarch %{ix86}
+%ifarch %{ix86} ppc
 %{!?_without_svgalib:BuildRequires:	svgalib-devel}
 %endif
 BuildRequires:	XFree86-devel
@@ -126,7 +126,7 @@ obs³ug± d¼wiêku i joysticka.
 cd src
 
 %if %{?_without_svgalib:0}%{!?_without_svgalib:1}
-%ifarch %{ix86}
+%ifarch %{ix86} ppc
 
 %configure2_13 --target=svgalib \
 	--disable-VERY_SLOW \
@@ -219,7 +219,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_xbindir}} \
 	$RPM_BUILD_ROOT{%{_datadir}/atari800,%{_mandir}/man1}
 
-%ifarch %{ix86}
+%ifarch %{ix86} ppc
 %{!?_without_svgalib:install src/atari800-svga $RPM_BUILD_ROOT%{_bindir}}
 %endif
 install src/atari800-x11 $RPM_BUILD_ROOT%{_xbindir}
@@ -261,7 +261,7 @@ unzip -q -L xf25.zip
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_xbindir}/atari800-SDL
 
-%ifarch %{ix86}
+%ifarch %{ix86} ppc
 %if %{?_without_svgalib:0}%{!?_without_svgalib:1}
 %files svga
 %defattr(644,root,root,755)
