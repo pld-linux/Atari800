@@ -1,7 +1,8 @@
 #
 # Conditional build:
 # _with_license_agreement - with unzipped ROM files instead of xf25.zip
-
+# _without_svgalib	  - without SVGA version
+#
 Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
 Name:		Atari800
@@ -18,7 +19,9 @@ Source2:	%{name}-chooser
 Patch0:		%{name}-shm_fix.patch
 URL:		http://atari800.atari.org/
 BuildRequires:	unzip
-BuildRequires:	svgalib-devel
+%ifarch %{ix86}
+%{!?_without_svgalib:BuildRequires:	svgalib-devel}
+%endif
 BuildRequires:	XFree86-devel
 BuildRequires:	zlib-devel
 BuildRequires:	SDL-devel
@@ -132,6 +135,8 @@ obs³ug± d¼wiêku i joysticka.
 %build
 cd src
 
+%ifarch %{ix86}
+%if %{?_without_svgalib:0}%{!?_without_svgalib:1}
 %configure2_13 --target=svgalib \
 	--disable-VERY_SLOW \
 	--enable-NO_CYCLE_EXACT \
@@ -162,6 +167,8 @@ cd src
 mv -f atari800 atari800-svga
 
 %{__make} clean
+%endif
+%endif
 
 %configure2_13 --target=sdl \
 	--disable-VERY_SLOW \
@@ -189,6 +196,8 @@ mv -f atari800 atari800-svga
 	LDFLAGS="%{rpmldflags} -L/usr/X11R6/lib"
 mv -f atari800 atari800-SDL
 
+%{__make} clean
+
 %configure2_13 --target=x11-shm \
 	--disable-VERY_SLOW \
 	--enable-NO_CYCLE_EXACT \
@@ -212,8 +221,6 @@ mv -f atari800 atari800-SDL
 	LDFLAGS="%{rpmldflags} -L/usr/X11R6/lib"
 mv -f atari800 atari800-x11
 
-%{__make} clean
-
 sed s@/usr/local/lib/atari@%{_datadir}/atari800@g atari800.man >atari800.1
 
 %install
@@ -221,7 +228,9 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_xbindir}} \
 	$RPM_BUILD_ROOT{%{_datadir}/atari800,%{_mandir}/man1}
 
-install src/atari800-svga $RPM_BUILD_ROOT%{_bindir}
+%ifarch %{ix86}
+%{!?_without_svgalib:install src/atari800-svga $RPM_BUILD_ROOT%{_bindir}}
+%endif
 install src/atari800-x11 $RPM_BUILD_ROOT%{_xbindir}
 install src/atari800-SDL $RPM_BUILD_ROOT%{_xbindir}
 install %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/atari800
@@ -253,9 +262,13 @@ unzip -q -L xf25.zip
 %{_mandir}/man1/atari800.1*
 %attr(755,root,root) %{_bindir}/atari800
 
+%ifarch %{ix86}
+%if %{?_without_svgalib:0}%{!?_without_svgalib:1}
 %files svga
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/atari800-svga
+%endif
+%endif
 
 %files x11
 %defattr(644,root,root,755)
