@@ -10,8 +10,6 @@ Version:	1.2.2
 Release:	1
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
-Group(de):	Applikationen/Emulators
-Group(pl):	Aplikacje/Emulatory
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/atari800/atari800-%{version}.tar.gz
 # NOTE: ROMs probably can be redistributed only in original XF25 archive
 Source1:	http://joy.sophics.cz/www/xf25.zip
@@ -39,8 +37,6 @@ To jest emulator Atari 800, 800XL, 130XE i 5200.
 Summary:	Atari 800 Emulator - common files for svgalib and X11 versions
 Summary(pl):	Emulator Atari 800 - pliki wspólne dla wersji svgalib oraz X11
 Group:		Applications/Emulators
-Group(de):	Applikationen/Emulators
-Group(pl):	Aplikacje/Emulatory
 Obsoletes:	Atari800
 %{!?_with_license_agreement:Prereq:	unzip}
 
@@ -70,8 +66,6 @@ Summary:	Atari 800 Emulator - svgalib version
 Summary(pl):	Emulator Atari 800 - wersja pod svgalib
 License:	GPL
 Group:		Applications/Emulators
-Group(de):	Applikationen/Emulators
-Group(pl):	Aplikacje/Emulatory
 Requires:	%{name}-common = %{version}
 
 %description svga
@@ -91,8 +85,6 @@ Summary:	Atari 800 Emulator - X Window version
 Summary(pl):	Emulator Atari 800 - wersja pod X Window
 License:	GPL
 Group:		Applications/Emulators
-Group(de):	Applikationen/Emulators
-Group(pl):	Aplikacje/Emulatory
 Requires:	%{name}-common = %{version}
 
 %description x11
@@ -112,8 +104,6 @@ Summary:	Atari 800 Emulator - SDL version
 Summary(pl):	Emulator Atari 800 - wersja pod SDL
 License:	GPL
 Group:		Applications/Emulators
-Group(de):	Applikationen/Emulators
-Group(pl):	Aplikacje/Emulatory
 Requires:	%{name}-common = %{version}
 
 %description SDL
