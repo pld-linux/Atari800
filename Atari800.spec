@@ -6,7 +6,7 @@
 Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
 Name:		Atari800
-Version:	1.2.5
+Version:	1.3.0
 Release:	1
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
@@ -126,7 +126,7 @@ cd src
 %if %{?_without_svgalib:0}%{!?_without_svgalib:1}
 %ifarch %{ix86} alpha ppc
 
-%configure2_13 --target=svgalib \
+%configure --target=svgalib \
 	--disable-VERY_SLOW \
 	--enable-NO_CYCLE_EXACT \
 	--enable-CRASH_MENU \
