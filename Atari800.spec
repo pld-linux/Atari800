@@ -7,7 +7,7 @@ Summary(pl):	Emulator Atari 800
 Name:		Atari800
 %define		ver_short	120
 Version:	1.2.0
-Release:	2
+Release:	3
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Group(de):	Applikationen/Emulators
@@ -17,6 +17,7 @@ Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/atari800/a800s%{ver_short}.tg
 Source1:	http://joy.sophics.cz/www/xf25.zip
 Source2:	%{name}-chooser
 Patch0:		%{name}-shm_fix.patch
+Patch1:		%{name}-joystick.patch
 URL:		http://atari800.atari.org/
 BuildRequires:	unzip
 BuildRequires:	svgalib-devel
@@ -129,6 +130,7 @@ obs³ug± d¼wiêku i joysticka.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
+%patch1 -p1
 
 %build
 cd src
