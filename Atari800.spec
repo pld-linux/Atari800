@@ -1,7 +1,7 @@
 #
 # Conditional build:
-# _with_license_agreement - with unzipped ROM files instead of xf25.zip
-# _without_svgalib	  - without SVGA version
+# _with_license_agreement	- with unzipped ROM files instead of xf25.zip
+# _without_svga			- without SVGA version
 #
 Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
@@ -20,7 +20,7 @@ URL:		http://atari800.atari.org/
 BuildRequires:	SDL-devel
 BuildRequires:	XFree86-devel
 %ifarch %{ix86} alpha ppc
-%{!?_without_svgalib:BuildRequires:	svgalib-devel}
+%{!?_without_svga:BuildRequires:	svgalib-devel}
 %endif
 BuildRequires:	unzip
 BuildRequires:	zlib-devel
@@ -124,7 +124,7 @@ obs³ug± d¼wiêku i joysticka.
 cd src
 
 CFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer}"
-%if %{?_without_svgalib:0}%{!?_without_svgalib:1}
+%if %{?_without_svga:0}%{!?_without_svga:1}
 %ifarch %{ix86} alpha ppc
 
 %configure --target=svgalib \
@@ -213,7 +213,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/atari800,%{_mandir}/man1}
 
 %ifarch %{ix86} alpha ppc
-%{!?_without_svgalib:install src/atari800-svga $RPM_BUILD_ROOT%{_bindir}}
+%{!?_without_svga:install src/atari800-svga $RPM_BUILD_ROOT%{_bindir}}
 %endif
 install src/atari800-x11 $RPM_BUILD_ROOT%{_bindir}
 install src/atari800-SDL $RPM_BUILD_ROOT%{_bindir}
@@ -253,7 +253,7 @@ unzip -q -L xf25.zip
 %attr(755,root,root) %{_bindir}/atari800-SDL
 
 %ifarch %{ix86} alpha ppc
-%if %{?_without_svgalib:0}%{!?_without_svgalib:1}
+%if %{?_without_svga:0}%{!?_without_svga:1}
 %files svga
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/atari800-svga
