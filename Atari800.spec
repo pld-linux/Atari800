@@ -173,7 +173,7 @@ install src/atari800-x11 $RPM_BUILD_ROOT%{_xbindir}
 install %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/atari800
 install src/atari800.1 $RPM_BUILD_ROOT%{_mandir}/man1/atari800.1
 
-%if "%{bcond_on_license_agreement:1}%{!?bcond_on_license_agreement:0}"
+%if %{?bcond_on_license_agreement:1}%{!?bcond_on_license_agreement:0}
 unzip -q -L %{SOURCE1} -d $RPM_BUILD_ROOT%{_datadir}/atari800
 rm -f $RPM_BUILD_ROOT%{_datadir}/atari800/xf25.*
 %else
@@ -186,7 +186,7 @@ gzip -9nf DOC/{BUGS,CHANGES,CREDITS,FAQ,README,TODO,USAGE} README.1ST \
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%if "%{bcond_on_license_agreement:0}%{!?bcond_on_license_agreement:1}"
+%if %{?bcond_on_license_agreement:0}%{!?bcond_on_license_agreement:1}
 %post common
 cd %{_datadir}/atari800
 unzip -q -L xf25.zip
