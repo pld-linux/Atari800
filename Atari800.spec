@@ -26,6 +26,8 @@ BuildRequires:	unzip
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		specflags	-fomit-frame-pointer
+
 %description
 This is Atari 800, 800XL, 130XE and 5200 emulator.
 
@@ -123,7 +125,7 @@ obs³ug± d¼wiêku i joysticka.
 %build
 cd src
 
-CFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer}"
+CFLAGS="%{rpmcflags}"
 %if %{?_without_svga:0}%{!?_without_svga:1}
 %ifarch %{ix86} alpha ppc
 
