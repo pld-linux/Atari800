@@ -253,14 +253,6 @@ unzip -q -L xf25.zip
 %{_mandir}/man1/atari800.1*
 %attr(755,root,root) %{_bindir}/atari800
 
-%ifarch %{ix86}
-%if %{?_without_svgalib:0}%{!?_without_svgalib:1}
-%files svga
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/atari800-svga
-%endif
-%endif
-
 %files x11
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_xbindir}/atari800-x11
@@ -268,3 +260,11 @@ unzip -q -L xf25.zip
 %files SDL
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_xbindir}/atari800-SDL
+
+%ifarch %{ix86}
+%if %{?_without_svgalib:0}%{!?_without_svgalib:1}
+%files svga
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/atari800-svga
+%endif
+%endif
