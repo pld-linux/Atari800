@@ -1,6 +1,6 @@
 #
 # Conditional build:
-# bcond_on_license_agreement - with unzipped ROM files instead of xf25.zip
+# _with_license_agreement - with unzipped ROM files instead of xf25.zip
 #
 Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
@@ -34,7 +34,7 @@ Group:		Applications/Emulators
 Group(de):	Applikationen/Emulators
 Group(pl):	Aplikacje/Emulatory
 Obsoletes:	Atari800
-%{!?bcond_on_license_agreement:Requires:	unzip}
+%{!?_with_license_agreement:Requires:	unzip}
 
 %description common
 This is Atari 800, 800XL, 130XE and 5200 emulator.
@@ -42,9 +42,9 @@ This is Atari 800, 800XL, 130XE and 5200 emulator.
 This package contains common files for both svgalib and X11 versions
 of Atari800.
 
-%{!?bcond_on_license_agreement:Note: because of license problems we had to include whole X-Former}
-%{!?bcond_on_license_agreement:archive (xf25.zip). If you don't want it - rebuild Atari800 by:}
-%{!?bcond_on_license_agreement:rpm --rebuild --with license_agreement ftp://ftp.pld.org.pl/PLD-1.0/SRPMS/SRPMS/%{name}-%{version}-%{release}.src.rpm}
+%{!?_with_license_agreement:Note: because of license problems we had to include whole X-Former}
+%{!?_with_license_agreement:archive (xf25.zip). If you don't want it - rebuild Atari800 by:}
+%{!?_with_license_agreement:rpm --rebuild --with license_agreement ftp://ftp.pld.org.pl/PLD-1.0/SRPMS/SRPMS/%{name}-%{version}-%{release}.src.rpm}
 
 %description common -l pl
 To jest emulator Atari 800, 800XL, 130XE i 5200.
@@ -52,10 +52,10 @@ To jest emulator Atari 800, 800XL, 130XE i 5200.
 Ten pakiet zawiera pliki wspólne dla wersji dzia³aj±cych pod svgalib
 oraz X11.
 
-%{!?bcond_on_license_agreement:Uwaga: z powodu problemów z licencj± musieli¶my za³±czyæ ca³± paczkê}
-%{!?bcond_on_license_agreement:z emulatorem X-Former (xf25.zip). Je¶li jej nie chcesz w pakiecie -}
-%{!?bcond_on_license_agreement:przebuduj pakiet poleceniem:}
-%{!?bcond_on_license_agreement:rpm --rebuild --with license_agreement ftp://ftp.pld.org.pl/PLD-1.0/SRPMS/SRPMS/%{name}-%{version}-%{release}.src.rpm}
+%{!?_with_license_agreement:Uwaga: z powodu problemów z licencj± musieli¶my za³±czyæ ca³± paczkê}
+%{!?_with_license_agreement:z emulatorem X-Former (xf25.zip). Je¶li jej nie chcesz w pakiecie -}
+%{!?_with_license_agreement:przebuduj pakiet poleceniem:}
+%{!?_with_license_agreement:rpm --rebuild --with license_agreement ftp://ftp.pld.org.pl/PLD-1.0/SRPMS/SRPMS/%{name}-%{version}-%{release}.src.rpm}
 
 %package svga
 Summary:	Atari 800 Emulator - svgalib version
@@ -173,7 +173,7 @@ install src/atari800-x11 $RPM_BUILD_ROOT%{_xbindir}
 install %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/atari800
 install src/atari800.1 $RPM_BUILD_ROOT%{_mandir}/man1/atari800.1
 
-%if %{?bcond_on_license_agreement:1}%{!?bcond_on_license_agreement:0}
+%if %{?_with_license_agreement:1}%{!?_with_license_agreement:0}
 unzip -q -L %{SOURCE1} -d $RPM_BUILD_ROOT%{_datadir}/atari800
 rm -f $RPM_BUILD_ROOT%{_datadir}/atari800/xf25.*
 %else
@@ -186,7 +186,7 @@ gzip -9nf DOC/{BUGS,CHANGES,CREDITS,FAQ,README,TODO,USAGE} README.1ST \
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%if %{?bcond_on_license_agreement:0}%{!?bcond_on_license_agreement:1}
+%if %{?_with_license_agreement:0}%{!?_with_license_agreement:1}
 %post common
 cd %{_datadir}/atari800
 unzip -q -L xf25.zip
