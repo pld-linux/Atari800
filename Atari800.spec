@@ -208,8 +208,7 @@ mv -f atari800 atari800-x11
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_xbindir}} \
-	$RPM_BUILD_ROOT{%{_datadir}/atari800,%{_mandir}/man1}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/atari800,%{_mandir}/man1}
 
 %ifarch %{ix86} alpha ppc
 %{!?_without_svgalib:install src/atari800-svga $RPM_BUILD_ROOT%{_bindir}}
