@@ -3,7 +3,9 @@
 if [ -n "$DISPLAY" -a -x /usr/X11R6/bin/atari800-x11 ] ; then
   exec /usr/X11R6/bin/atari800-x11
 else
-  if [ -x /usr/bin/atari800-svga ] ; then
+  if [ -x /usr/X11R6/bin/atari800-SDL ] ; then
+    exec /usr/X11R6/bin/atari800-SDL
+  elif [ -x /usr/bin/atari800-svga ] ; then
     exec /usr/bin/atari800-svga
   else
     if [ -x /usr/X11R6/bin/atari800-x11 ] ; then
@@ -11,7 +13,7 @@ else
       echo "Atari800-x11 needs X-server running and DISPLAY variable set."
     else
       echo "Cannot run Atari800 - executable not found."
-      echo "Install Atari800-x11 or Atari800-svga package."
+      echo "Install Atari800-x11, Atari800-SDL or Atari800-svga package."
     fi
   fi
 fi

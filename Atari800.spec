@@ -7,7 +7,7 @@ Summary(pl):	Emulator Atari 800
 Name:		Atari800
 %define		ver_short	120
 Version:	1.2.0
-Release:	1
+Release:	2
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Group(de):	Applikationen/Emulators
@@ -66,10 +66,10 @@ oraz X11.
 %package svga
 Summary:	Atari 800 Emulator - svgalib version
 Summary(pl):	Emulator Atari 800 - wersja pod svgalib
+License:	GPL
 Group:		Applications/Emulators
 Group(de):	Applikationen/Emulators
 Group(pl):	Aplikacje/Emulatory
-License:	GPL
 Requires:	%{name}-common = %{version}
 
 %description svga
@@ -87,10 +87,10 @@ svgalib z obs³ug± d¼wiêku i joysticka.
 %package x11
 Summary:	Atari 800 Emulator - X Window version
 Summary(pl):	Emulator Atari 800 - wersja pod X Window
+License:	GPL
 Group:		Applications/Emulators
 Group(de):	Applikationen/Emulators
 Group(pl):	Aplikacje/Emulatory
-License:	GPL
 Requires:	%{name}-common = %{version}
 
 %description x11
@@ -108,10 +108,10 @@ obs³ug± d¼wiêku i joysticka.
 %package SDL
 Summary:	Atari 800 Emulator - SDL version
 Summary(pl):	Emulator Atari 800 - wersja pod SDL
+License:	GPL
 Group:		Applications/Emulators
 Group(de):	Applikationen/Emulators
 Group(pl):	Aplikacje/Emulatory
-License:	GPL
 Requires:	%{name}-common = %{version}
 
 %description SDL
@@ -135,30 +135,30 @@ cd src
 
 autoheader
 autoconf
-%configure --target=svgalib <<EOF
-n
-y
-y
-y
-y
-n
-y
-n
-y
-n
-n
-y
-y
-y
-y
-n
-y
-n
-n
-n
-y
-y
-EOF
+%configure --target=svgalib \
+	--disable-VERY_SLOW \
+	--enable-NO_CYCLE_EXACT \
+	--enable-CRASH_MENU \
+	--enable-MONITOR_BREAK \
+	--enable-MONITOR_HINTS \
+	--enable-MONITOR_ASSEMBLER \
+	--enable-COMPILED_PALETTE \
+	--enable-SNAILMETER \
+	--disable-SVGA_SPEEDUP \
+	--enable-USE_CURSORBLOCK \
+	--disable-JOYMOUSE \
+	--enable-LINUX_JOYSTICK \
+	--enable-SOUND \
+	--enable-NO_VOL_ONLY \
+	--enable-NO_CONSOL_SOUND \
+	--disable-SERIO_SOUND \
+	--enable-NOSNDINTER \
+	--disable-CLIP \
+	--disable-STEREO \
+	--disable-BUFFERED_LOG \
+	--enable-SET_LED \
+	--enable-NO_LED_ON_SCREEN
+
 %{__make} \
 	CFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer}" \
 	LDFLAGS="%{rpmldflags}"
@@ -166,53 +166,56 @@ mv -f atari800 atari800-svga
 
 %{__make} clean
 
-%configure --target=x11-shm <<EOF
-n
-y
-y
-y
-y
-n
-n
-n
-y
-y
-y
-y
-y
-y
-n
-n
-EOF
+%configure --target=sdl \
+	--disable-VERY_SLOW \
+	--enable-NO_CYCLE_EXACT \
+	--enable-CRASH_MENU \
+	--enable-MONITOR_BREAK \
+	--enable-MONITOR_HINTS \
+	--enable-MONITOR_ASSEMBLER \
+	--enable-COMPILED_PALETTE \
+	--enable-SNAILMETER \
+	--enable-LINUX_JOYSTICK \
+	--enable-SOUND \
+	--enable-NO_VOL_ONLY \
+	--enable-NO_CONSOL_SOUND \
+	--disable-SERIO_SOUND \
+	--enable-NOSNDINTER \
+	--disable-CLIP \
+	--disable-STEREO \
+	--disable-BUFFERED_LOG \
+	--enable-SET_LED \
+	--enable-NO_LED_ON_SCREEN
+	
+%{__make} \
+	CFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -I/usr/X11R6/include/SDL" \
+	LDFLAGS="%{rpmldflags} -L/usr/X11R6/lib"
+mv -f atari800 atari800-SDL
+
+%configure --target=x11-shm \
+	--disable-VERY_SLOW \
+	--enable-NO_CYCLE_EXACT \
+	--enable-CRASH_MENU \
+	--enable-MONITOR_BREAK \
+	--enable-MONITOR_HINTS \
+	--enable-MONITOR_ASSEMBLER \
+	--enable-COMPILED_PALETTE \
+	--enable-SNAILMETER \
+	--enable-LINUX_JOYSTICK \
+	--enable-SOUND \
+	--enable-NO_VOL_ONLY \
+	--enable-NO_CONSOL_SOUND \
+	--disable-SERIO_SOUND \
+	--enable-NOSNDINTER \
+	--disable-CLIP \
+	--disable-STEREO
+
 %{__make} \
 	CFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -I/usr/X11R6/include" \
 	LDFLAGS="%{rpmldflags} -L/usr/X11R6/lib"
 mv -f atari800 atari800-x11
 
 %{__make} clean
-
-%configure --target=sdl <<EOF
-n
-y
-y
-y
-y
-n
-n
-n
-y
-y
-y
-y
-y
-y
-n
-n
-EOF
-%{__make} \
-	CFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -I/usr/X11R6/include/SDL" \
-	LDFLAGS="%{rpmldflags} -L/usr/X11R6/lib"
-mv -f atari800 atari800-SDL
 
 sed s@/usr/local/lib/atari@%{_datadir}/atari800@g atari800.man >atari800.1
 
