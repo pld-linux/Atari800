@@ -23,7 +23,11 @@ URL:		http://atari800.atari.org/
 BuildRequires:	SDL-devel
 BuildRequires:	XFree86-devel
 %if %{with svga}
+%ifarch ppc
+BuildRequires:	svgalib4ggi-devel
+%else
 BuildRequires:	svgalib-devel
+%endif
 %endif
 %if %{with license_agreement}
 BuildRequires:	unzip
