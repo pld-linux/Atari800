@@ -11,8 +11,10 @@ Release:	1
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Source0:	http://dl.sourceforge.net/atari800/atari800-%{version}.tar.gz
+# Source0-md5:	2998586f3c69f8a7e50439722e30ffc6
 # NOTE: ROMs probably can be redistributed only in original XF25 archive
 Source1:	http://joy.sophics.cz/www/xf25.zip
+# Source1-md5:	4dc3b6b4313e9596c4d474785a37b94d
 Source2:	%{name}-chooser
 URL:		http://atari800.atari.org/
 BuildRequires:	SDL-devel
