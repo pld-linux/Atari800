@@ -6,12 +6,12 @@
 Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
 Name:		Atari800
-Version:	1.3.0
+Version:	1.3.1
 Release:	1
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Source0:	http://dl.sourceforge.net/atari800/atari800-%{version}.tar.gz
-# Source0-md5:	2998586f3c69f8a7e50439722e30ffc6
+# Source0-md5:	02c824a4648732a3646d377ee02efd7d
 # NOTE: ROMs probably can be redistributed only in original XF25 archive
 Source1:	http://joy.sophics.cz/www/xf25.zip
 # Source1-md5:	4dc3b6b4313e9596c4d474785a37b94d
@@ -127,7 +127,8 @@ CFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer}"
 %if %{?_without_svga:0}%{!?_without_svga:1}
 %ifarch %{ix86} alpha ppc
 
-%configure --target=svgalib \
+%configure \
+	--target=svgalib \
 	--disable-VERY_SLOW \
 	--enable-NO_CYCLE_EXACT \
 	--enable-CRASH_MENU \
@@ -159,7 +160,8 @@ mv -f atari800 atari800-svga
 %endif
 %endif
 
-%configure2_13 --target=sdl \
+%configure \
+	--target=sdl \
 	--disable-VERY_SLOW \
 	--enable-NO_CYCLE_EXACT \
 	--enable-CRASH_MENU \
@@ -186,7 +188,8 @@ mv -f atari800 atari800-SDL
 
 %{__make} clean
 
-%configure2_13 --target=x11-shm \
+%configure \
+	--target=shm \
 	--disable-VERY_SLOW \
 	--enable-NO_CYCLE_EXACT \
 	--enable-CRASH_MENU \
