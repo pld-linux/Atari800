@@ -7,7 +7,7 @@ Summary(pl):	Emulator Atari 800
 Name:		Atari800
 %define		ver_short	107
 Version:	1.0.7
-Release:	1
+Release:	2
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Group(de):	Applikationen/Emulators
@@ -26,6 +26,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_xbindir	%{_prefix}/X11R6/bin
 
 %description
+This is Atari 800, 800XL, 130XE and 5200 emulator.
+
+%description -l pl
+To jest emulator Atari 800, 800XL, 130XE i 5200.
 
 %package common
 Summary:	Atari 800 Emulator - common files for svgalib and X11 versions
@@ -100,14 +104,12 @@ Ten pakiet zawiera wykonywalny plik emulatora skonfigurowany dla X11 z
 obs³ug± d¼wiêku i joysticka.
 
 %prep
-%setup -q -c -T -n %{name}-%{version}
-cd ..
-unzip -q %{SOURCE0}
+%setup -q
 
 %build
 cd src
 
-%configure svgalib <<EOF
+%configure2_13 svgalib <<EOF
 n
 y
 y
@@ -138,7 +140,7 @@ mv -f atari800 atari800-svga
 
 %{__make} clean
 
-%configure x11-shm <<EOF
+%configure2_13 x11-shm <<EOF
 n
 y
 y
