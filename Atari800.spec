@@ -1,8 +1,11 @@
 #
 # Conditional build:
-%bcond_with license_agreement   # with unzipped ROM files instead of xf25.zip
-%bcond_without svga 		# without SVGA version
-
+%bcond_with	license_agreement	# with unzipped ROM files instead of xf25.zip
+%bcond_without	svga 			# without SVGA version
+#
+%ifnarch %{ix86} alpha ppc
+%undefine	with_svga
+%endif
 Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
 Name:		Atari800
@@ -19,12 +22,12 @@ Source2:	%{name}-chooser
 URL:		http://atari800.atari.org/
 BuildRequires:	SDL-devel
 BuildRequires:	XFree86-devel
-%ifarch %{ix86} alpha ppc
 %if %{with svga}
 BuildRequires:	svgalib-devel
 %endif
-%endif
+%if %{with license_agreement}
 BuildRequires:	unzip
+%endif
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -41,8 +44,8 @@ Summary:	Atari 800 Emulator - common files for svgalib and X11 versions
 Summary(pl):	Emulator Atari 800 - pliki wspólne dla wersji svgalib oraz X11
 Group:		Applications/Emulators
 Obsoletes:	Atari800
-%if ! %{with license_agreement}
-Prereq:	unzip
+%if %{without license_agreement}
+Requires(post):	unzip
 %endif
 
 %description common
@@ -50,9 +53,9 @@ This is Atari 800, 800XL, 130XE and 5200 emulator.
 
 This package contains common files for both svgalib and X11 versions
 of Atari800.
-%if ! %{with license_agreement}
+%if %{without license_agreement}
 Note: because of license problems we had to include whole X-Former
-archive (xf25.zip). If you don't want it - rebuild Atari800 (--with 
+archive (xf25.zip). If you don't want it - rebuild Atari800 (--with
 license_agreement)
 %endif 
 
@@ -61,7 +64,7 @@ To jest emulator Atari 800, 800XL, 130XE i 5200.
 
 Ten pakiet zawiera pliki wspólne dla wersji dzia³aj±cych pod svgalib
 oraz X11.
-%if ! %{with license_agreement}
+%if %{without license_agreement}
 Uwaga: z powodu problemów z licencj± musieli¶my za³±czyæ ca³± paczkê
 z emulatorem X-Former (xf25.zip). Je¶li jej nie chcesz w pakiecie -
 przebuduj pakiet z opcja --with license_agreement.
@@ -133,8 +136,6 @@ cd src
 CFLAGS="%{rpmcflags}"
 
 %if %{with svga}
-%ifarch %{ix86} alpha ppc
-
 %configure \
 	--target=svgalib \
 	--disable-VERY_SLOW \
@@ -165,7 +166,6 @@ CFLAGS="%{rpmcflags}"
 mv -f atari800 atari800-svga
 
 %{__make} clean
-%endif
 %endif
 
 %configure \
@@ -223,10 +223,8 @@ mv -f atari800 atari800-x11
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/atari800,%{_mandir}/man1}
 
-%ifarch %{ix86} alpha ppc
 %if %{with svga}
 install src/atari800-svga $RPM_BUILD_ROOT%{_bindir}
-%endif
 %endif
 install src/atari800-x11 $RPM_BUILD_ROOT%{_bindir}
 install src/atari800-SDL $RPM_BUILD_ROOT%{_bindir}
@@ -243,7 +241,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/atari800
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%if ! %{with license_agreement}
+%if %{without license_agreement}
 %post common
 cd %{_datadir}/atari800
 unzip -q -L xf25.zip
@@ -265,10 +263,8 @@ unzip -q -L xf25.zip
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/atari800-SDL
 
-%ifarch %{ix86} alpha ppc
 %if %{with svga}
 %files svga
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/atari800-svga
-%endif
 %endif
