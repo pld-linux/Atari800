@@ -1,25 +1,24 @@
 #
 # Conditional build:
 # _with_license_agreement - with unzipped ROM files instead of xf25.zip
-
+# _without_svgalib	  - without SVGA version
+#
 Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
 Name:		Atari800
-%define		ver_short	120
-Version:	1.2.0
-Release:	2
+Version:	1.2.3
+Release:	1
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
-Group(de):	Applikationen/Emulators
-Group(pl):	Aplikacje/Emulatory
-Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/atari800/a800s%{ver_short}.tgz
+Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/atari800/atari800-%{version}.tar.gz
 # NOTE: ROMs probably can be redistributed only in original XF25 archive
 Source1:	http://joy.sophics.cz/www/xf25.zip
 Source2:	%{name}-chooser
-Patch0:		%{name}-shm_fix.patch
 URL:		http://atari800.atari.org/
 BuildRequires:	unzip
-BuildRequires:	svgalib-devel
+%ifarch %{ix86} ppc
+%{!?_without_svgalib:BuildRequires:	svgalib-devel}
+%endif
 BuildRequires:	XFree86-devel
 BuildRequires:	zlib-devel
 BuildRequires:	SDL-devel
@@ -37,8 +36,6 @@ To jest emulator Atari 800, 800XL, 130XE i 5200.
 Summary:	Atari 800 Emulator - common files for svgalib and X11 versions
 Summary(pl):	Emulator Atari 800 - pliki wspólne dla wersji svgalib oraz X11
 Group:		Applications/Emulators
-Group(de):	Applikationen/Emulators
-Group(pl):	Aplikacje/Emulatory
 Obsoletes:	Atari800
 %{!?_with_license_agreement:Prereq:	unzip}
 
@@ -68,8 +65,6 @@ Summary:	Atari 800 Emulator - svgalib version
 Summary(pl):	Emulator Atari 800 - wersja pod svgalib
 License:	GPL
 Group:		Applications/Emulators
-Group(de):	Applikationen/Emulators
-Group(pl):	Aplikacje/Emulatory
 Requires:	%{name}-common = %{version}
 
 %description svga
@@ -89,8 +84,6 @@ Summary:	Atari 800 Emulator - X Window version
 Summary(pl):	Emulator Atari 800 - wersja pod X Window
 License:	GPL
 Group:		Applications/Emulators
-Group(de):	Applikationen/Emulators
-Group(pl):	Aplikacje/Emulatory
 Requires:	%{name}-common = %{version}
 
 %description x11
@@ -110,8 +103,6 @@ Summary:	Atari 800 Emulator - SDL version
 Summary(pl):	Emulator Atari 800 - wersja pod SDL
 License:	GPL
 Group:		Applications/Emulators
-Group(de):	Applikationen/Emulators
-Group(pl):	Aplikacje/Emulatory
 Requires:	%{name}-common = %{version}
 
 %description SDL
@@ -127,15 +118,15 @@ Ten pakiet zawiera wykonywalny plik emulatora skonfigurowany dla SDL z
 obs³ug± d¼wiêku i joysticka.
 
 %prep
-%setup -q -n %{name}
-%patch0 -p1
+%setup -q -n atari800-%{version}
 
 %build
 cd src
 
-autoheader
-autoconf
-%configure --target=svgalib \
+%if %{?_without_svgalib:0}%{!?_without_svgalib:1}
+%ifarch %{ix86} ppc
+
+%configure2_13 --target=svgalib \
 	--disable-VERY_SLOW \
 	--enable-NO_CYCLE_EXACT \
 	--enable-CRASH_MENU \
@@ -165,8 +156,10 @@ autoconf
 mv -f atari800 atari800-svga
 
 %{__make} clean
+%endif
+%endif
 
-%configure --target=sdl \
+%configure2_13 --target=sdl \
 	--disable-VERY_SLOW \
 	--enable-NO_CYCLE_EXACT \
 	--enable-CRASH_MENU \
@@ -192,7 +185,9 @@ mv -f atari800 atari800-svga
 	LDFLAGS="%{rpmldflags} -L/usr/X11R6/lib"
 mv -f atari800 atari800-SDL
 
-%configure --target=x11-shm \
+%{__make} clean
+
+%configure2_13 --target=x11-shm \
 	--disable-VERY_SLOW \
 	--enable-NO_CYCLE_EXACT \
 	--enable-CRASH_MENU \
@@ -215,8 +210,6 @@ mv -f atari800 atari800-SDL
 	LDFLAGS="%{rpmldflags} -L/usr/X11R6/lib"
 mv -f atari800 atari800-x11
 
-%{__make} clean
-
 sed s@/usr/local/lib/atari@%{_datadir}/atari800@g atari800.man >atari800.1
 
 %install
@@ -224,7 +217,9 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_xbindir}} \
 	$RPM_BUILD_ROOT{%{_datadir}/atari800,%{_mandir}/man1}
 
-install src/atari800-svga $RPM_BUILD_ROOT%{_bindir}
+%ifarch %{ix86} ppc
+%{!?_without_svgalib:install src/atari800-svga $RPM_BUILD_ROOT%{_bindir}}
+%endif
 install src/atari800-x11 $RPM_BUILD_ROOT%{_xbindir}
 install src/atari800-SDL $RPM_BUILD_ROOT%{_xbindir}
 install %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/atari800
@@ -237,9 +232,6 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/atari800/xf25.*
 install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/atari800
 %endif
 
-gzip -9nf DOC/{BUGS,CHANGES,CREDITS,FAQ,README,TODO,USAGE} README.1ST \
-	DOC/{LPTjoy.txt,cart.txt,emuos.txt,pokeysnd.txt,usage1}
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -251,14 +243,11 @@ unzip -q -L xf25.zip
 
 %files common
 %defattr(644,root,root,755)
-%doc  *.gz DOC/*.gz
+%doc DOC/{BUGS,CHANGES,CREDITS,FAQ,README,TODO,USAGE} README.1ST
+%doc DOC/{LPTjoy.txt,cart.txt,emuos.txt,pokeysnd.txt}
+%attr(755,root,root) %{_bindir}/atari800
 %{_datadir}/atari800
 %{_mandir}/man1/atari800.1*
-%attr(755,root,root) %{_bindir}/atari800
-
-%files svga
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/atari800-svga
 
 %files x11
 %defattr(644,root,root,755)
@@ -267,3 +256,11 @@ unzip -q -L xf25.zip
 %files SDL
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_xbindir}/atari800-SDL
+
+%ifarch %{ix86} ppc
+%if %{?_without_svgalib:0}%{!?_without_svgalib:1}
+%files svga
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/atari800-svga
+%endif
+%endif
