@@ -8,20 +8,20 @@ Name:		Atari800
 %define		ver_short	107
 Version:	1.0.7
 Release:	1
+License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Group(de):	Applikationen/Emulators
 Group(pl):	Aplikacje/Emulatory
-License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
-URL:		http://atari800.atari.org
 Source0:	ftp://ftp.sophics.cz/pub/Atari800/src/a800s%{ver_short}.zip
 # NOTE: ROMs probably can be redistributed only in original XF25 archive
 Source1:	http://joy.sophics.cz/www/xf25.zip
 Source2:	%{name}-chooser
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+URL:		http://atari800.atari.org/
 BuildRequires:	unzip
 BuildRequires:	svgalib-devel
 BuildRequires:	XFree86-devel
 BuildRequires:	zlib-devel
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_xbindir	%{_prefix}/X11R6/bin
 
