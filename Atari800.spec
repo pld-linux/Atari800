@@ -3,9 +3,6 @@
 %bcond_with	license_agreement	# with unzipped ROM files instead of xf25.zip
 %bcond_without	svga 			# without SVGA version
 #
-%ifnarch %{ix86} alpha ppc
-%undefine	with_svga
-%endif
 Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
 Name:		Atari800
@@ -22,13 +19,7 @@ Source2:	%{name}-chooser
 URL:		http://atari800.atari.org/
 BuildRequires:	SDL-devel
 BuildRequires:	XFree86-devel
-%if %{with svga}
-%ifarch ppc
-BuildRequires:	svgalib4ggi-devel
-%else
-BuildRequires:	svgalib-devel
-%endif
-%endif
+%{?with_svga:BuildRequires:	svgalib-devel}
 %if %{with license_agreement}
 BuildRequires:	unzip
 %endif
