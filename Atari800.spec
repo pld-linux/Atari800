@@ -127,6 +127,8 @@ obs³ug± d¼wiêku i joysticka.
 
 %build
 cd src
+cp -f /usr/share/automake/config.sub .
+
 
 CFLAGS="%{rpmcflags}"
 
