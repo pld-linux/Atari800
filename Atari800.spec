@@ -45,7 +45,7 @@ of Atari800.
 
 %{!?_with_license_agreement:Note: because of license problems we had to include whole X-Former}
 %{!?_with_license_agreement:archive (xf25.zip). If you don't want it - rebuild Atari800 by:}
-%{!?_with_license_agreement:rpm --rebuild --with license_agreement ftp://ftp.pld.org.pl/PLD-1.0/SRPMS/SRPMS/%{name}-%{version}-%{release}.src.rpm}
+%{!?_with_license_agreement:rpm --rebuild --with license_agreement ftp://ftp.pld-linux.org/PLD-1.0/SRPMS/SRPMS/%{name}-%{version}-%{release}.src.rpm}
 
 %description common -l pl
 To jest emulator Atari 800, 800XL, 130XE i 5200.
@@ -56,7 +56,7 @@ oraz X11.
 %{!?_with_license_agreement:Uwaga: z powodu problemów z licencj± musieli¶my za³±czyæ ca³± paczkê}
 %{!?_with_license_agreement:z emulatorem X-Former (xf25.zip). Je¶li jej nie chcesz w pakiecie -}
 %{!?_with_license_agreement:przebuduj pakiet poleceniem:}
-%{!?_with_license_agreement:rpm --rebuild --with license_agreement ftp://ftp.pld.org.pl/PLD-1.0/SRPMS/SRPMS/%{name}-%{version}-%{release}.src.rpm}
+%{!?_with_license_agreement:rpm --rebuild --with license_agreement ftp://ftp.pld-linux.org/PLD-1.0/SRPMS/SRPMS/%{name}-%{version}-%{release}.src.rpm}
 
 %package svga
 Summary:	Atari 800 Emulator - svgalib version
