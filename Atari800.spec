@@ -125,8 +125,9 @@ obs³ug± d¼wiêku i joysticka.
 %build
 cd src
 
-%ifarch %{ix86}
 %if %{?_without_svgalib:0}%{!?_without_svgalib:1}
+%ifarch %{ix86}
+
 %configure2_13 --target=svgalib \
 	--disable-VERY_SLOW \
 	--enable-NO_CYCLE_EXACT \
