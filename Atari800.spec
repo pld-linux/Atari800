@@ -9,12 +9,12 @@
 Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
 Name:		Atari800
-Version:	1.3.1
-Release:	5
+Version:	1.3.2
+Release:	1
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Source0:	http://dl.sourceforge.net/atari800/atari800-%{version}.tar.gz
-# Source0-md5:	02c824a4648732a3646d377ee02efd7d
+# Source0-md5:	8fcd251a3757270c02519ad7b86b7caa
 # NOTE: ROMs probably can be redistributed only in original XF25 archive
 Source1:	http://joy.sophics.cz/www/xf25.zip
 # Source1-md5:	4dc3b6b4313e9596c4d474785a37b94d
@@ -257,8 +257,7 @@ fi
 
 %files common
 %defattr(644,root,root,755)
-%doc DOC/{BUGS,CHANGES,CREDITS,FAQ,README,TODO,USAGE} README.1ST
-%doc DOC/{LPTjoy.txt,cart.txt,emuos.txt,pokeysnd.txt}
+%doc DOC/{BUGS,CREDITS,ChangeLog,FAQ,NEWS,README,TODO,USAGE,*.txt} README.1ST
 %attr(755,root,root) %{_bindir}/atari800
 %{_datadir}/atari800
 %{_mandir}/man1/atari800.1*
