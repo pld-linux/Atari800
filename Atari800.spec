@@ -34,7 +34,7 @@ Group:		Applications/Emulators
 Group(de):	Applikationen/Emulators
 Group(pl):	Aplikacje/Emulatory
 Obsoletes:	Atari800
-%{!?_with_license_agreement:Requires:	unzip}
+%{!?_with_license_agreement:Prereq:	unzip}
 
 %description common
 This is Atari 800, 800XL, 130XE and 5200 emulator.
