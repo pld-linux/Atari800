@@ -15,16 +15,14 @@ Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/atari800/atari800-%{version}.
 Source1:	http://joy.sophics.cz/www/xf25.zip
 Source2:	%{name}-chooser
 URL:		http://atari800.atari.org/
-BuildRequires:	unzip
+BuildRequires:	SDL-devel
+BuildRequires:	XFree86-devel
 %ifarch %{ix86} alpha ppc
 %{!?_without_svgalib:BuildRequires:	svgalib-devel}
 %endif
-BuildRequires:	XFree86-devel
+BuildRequires:	unzip
 BuildRequires:	zlib-devel
-BuildRequires:	SDL-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_xbindir	%{_prefix}/X11R6/bin
 
 %description
 This is Atari 800, 800XL, 130XE and 5200 emulator.
@@ -123,6 +121,7 @@ obs³ug± d¼wiêku i joysticka.
 %build
 cd src
 
+CFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer}"
 %if %{?_without_svgalib:0}%{!?_without_svgalib:1}
 %ifarch %{ix86} alpha ppc
 
@@ -150,9 +149,8 @@ cd src
 	--enable-SET_LED \
 	--enable-NO_LED_ON_SCREEN
 
-%{__make} \
-	CFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer}" \
-	LDFLAGS="%{rpmldflags}"
+%{__make}
+
 mv -f atari800 atari800-svga
 
 %{__make} clean
@@ -180,9 +178,8 @@ mv -f atari800 atari800-svga
 	--enable-SET_LED \
 	--enable-NO_LED_ON_SCREEN
 	
-%{__make} \
-	CFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -I/usr/X11R6/include/SDL" \
-	LDFLAGS="%{rpmldflags} -L/usr/X11R6/lib"
+%{__make}
+
 mv -f atari800 atari800-SDL
 
 %{__make} clean
@@ -205,12 +202,9 @@ mv -f atari800 atari800-SDL
 	--disable-CLIP \
 	--disable-STEREO
 
-%{__make} \
-	CFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -I/usr/X11R6/include" \
-	LDFLAGS="%{rpmldflags} -L/usr/X11R6/lib"
-mv -f atari800 atari800-x11
+%{__make}
 
-sed s@/usr/local/lib/atari@%{_datadir}/atari800@g atari800.man >atari800.1
+mv -f atari800 atari800-x11
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -220,10 +214,10 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_xbindir}} \
 %ifarch %{ix86} alpha ppc
 %{!?_without_svgalib:install src/atari800-svga $RPM_BUILD_ROOT%{_bindir}}
 %endif
-install src/atari800-x11 $RPM_BUILD_ROOT%{_xbindir}
-install src/atari800-SDL $RPM_BUILD_ROOT%{_xbindir}
+install src/atari800-x11 $RPM_BUILD_ROOT%{_bindir}
+install src/atari800-SDL $RPM_BUILD_ROOT%{_bindir}
 install %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/atari800
-install src/atari800.1 $RPM_BUILD_ROOT%{_mandir}/man1/atari800.1
+install src/atari800.man $RPM_BUILD_ROOT%{_mandir}/man1/atari800.1
 
 %if %{?_with_license_agreement:1}%{!?_with_license_agreement:0}
 unzip -q -L %{SOURCE1} -d $RPM_BUILD_ROOT%{_datadir}/atari800
@@ -251,11 +245,11 @@ unzip -q -L xf25.zip
 
 %files x11
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_xbindir}/atari800-x11
+%attr(755,root,root) %{_bindir}/atari800-x11
 
 %files SDL
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_xbindir}/atari800-SDL
+%attr(755,root,root) %{_bindir}/atari800-SDL
 
 %ifarch %{ix86} alpha ppc
 %if %{?_without_svgalib:0}%{!?_without_svgalib:1}
