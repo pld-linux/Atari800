@@ -234,9 +234,6 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/atari800/xf25.*
 install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/atari800
 %endif
 
-gzip -9nf DOC/{BUGS,CHANGES,CREDITS,FAQ,README,TODO,USAGE} README.1ST \
-	DOC/{LPTjoy.txt,cart.txt,emuos.txt,pokeysnd.txt}
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -248,10 +245,11 @@ unzip -q -L xf25.zip
 
 %files common
 %defattr(644,root,root,755)
-%doc  *.gz DOC/*.gz
+%doc DOC/{BUGS,CHANGES,CREDITS,FAQ,README,TODO,USAGE} README.1ST
+%doc DOC/{LPTjoy.txt,cart.txt,emuos.txt,pokeysnd.txt}
+%attr(755,root,root) %{_bindir}/atari800
 %{_datadir}/atari800
 %{_mandir}/man1/atari800.1*
-%attr(755,root,root) %{_bindir}/atari800
 
 %files x11
 %defattr(644,root,root,755)
