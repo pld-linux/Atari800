@@ -179,7 +179,7 @@ mv -f atari800 atari800-svga
 	--disable-BUFFERED_LOG \
 	--enable-SET_LED \
 	--enable-NO_LED_ON_SCREEN
-	
+
 %{__make}
 
 mv -f atari800 atari800-SDL
