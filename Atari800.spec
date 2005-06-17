@@ -19,6 +19,7 @@ Source2:	%{name}-chooser
 URL:		http://atari800.atari.org/
 BuildRequires:	SDL-devel
 BuildRequires:	XFree86-devel
+BuildRequires:	automake
 %{?with_svga:BuildRequires:	svgalib-devel}
 %if %{with license_agreement}
 BuildRequires:	unzip
