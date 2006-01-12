@@ -6,12 +6,12 @@
 Summary:	Atari 800 Emulator
 Summary(pl):	Emulator Atari 800
 Name:		Atari800
-Version:	1.3.6
+Version:	2.0.1
 Release:	1
 License:	GPL (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Source0:	http://dl.sourceforge.net/atari800/atari800-%{version}.tar.gz
-# Source0-md5:	98b58d26aabeedb124233787677c32c3
+# Source0-md5:	47ae5b2261ec85e6efa25b6ee784149b
 # NOTE: ROMs probably can be redistributed only in original XF25 archive
 Source1:	http://joy.sophics.cz/www/xf25.zip
 # Source1-md5:	4dc3b6b4313e9596c4d474785a37b94d
@@ -136,28 +136,9 @@ CFLAGS="%{rpmcflags}"
 %if %{with svga}
 %configure \
 	--target=svgalib \
-	--disable-VERY_SLOW \
-	--enable-NO_CYCLE_EXACT \
-	--enable-CRASH_MENU \
-	--enable-MONITOR_BREAK \
-	--enable-MONITOR_HINTS \
-	--enable-MONITOR_ASSEMBLER \
-	--enable-COMPILED_PALETTE \
-	--enable-SNAILMETER \
-	--disable-SVGA_SPEEDUP \
-	--enable-USE_CURSORBLOCK \
-	--disable-JOYMOUSE \
-	--enable-LINUX_JOYSTICK \
-	--enable-SOUND \
-	--enable-NO_VOL_ONLY \
-	--enable-NO_CONSOL_SOUND \
-	--disable-SERIO_SOUND \
-	--enable-NOSNDINTER \
-	--disable-CLIP \
-	--disable-STEREO \
-	--disable-BUFFERED_LOG \
-	--enable-SET_LED \
-	--enable-NO_LED_ON_SCREEN
+	--enable-crashmenu \
+	--enable-cursorblock \
+	--disable-stereosound
 
 %{__make}
 
@@ -168,25 +149,8 @@ mv -f atari800 atari800-svga
 
 %configure \
 	--target=sdl \
-	--disable-VERY_SLOW \
-	--enable-NO_CYCLE_EXACT \
-	--enable-CRASH_MENU \
-	--enable-MONITOR_BREAK \
-	--enable-MONITOR_HINTS \
-	--enable-MONITOR_ASSEMBLER \
-	--enable-COMPILED_PALETTE \
-	--enable-SNAILMETER \
-	--enable-LINUX_JOYSTICK \
-	--enable-SOUND \
-	--enable-NO_VOL_ONLY \
-	--enable-NO_CONSOL_SOUND \
-	--disable-SERIO_SOUND \
-	--enable-NOSNDINTER \
-	--disable-CLIP \
-	--disable-STEREO \
-	--disable-BUFFERED_LOG \
-	--enable-SET_LED \
-	--enable-NO_LED_ON_SCREEN
+	--enable-crashmenu \
+	--disable-stereosound
 
 %{__make}
 
@@ -196,22 +160,8 @@ mv -f atari800 atari800-SDL
 
 %configure \
 	--target=shm \
-	--disable-VERY_SLOW \
-	--enable-NO_CYCLE_EXACT \
-	--enable-CRASH_MENU \
-	--enable-MONITOR_BREAK \
-	--enable-MONITOR_HINTS \
-	--enable-MONITOR_ASSEMBLER \
-	--enable-COMPILED_PALETTE \
-	--enable-SNAILMETER \
-	--enable-LINUX_JOYSTICK \
-	--enable-SOUND \
-	--enable-NO_VOL_ONLY \
-	--enable-NO_CONSOL_SOUND \
-	--disable-SERIO_SOUND \
-	--enable-NOSNDINTER \
-	--disable-CLIP \
-	--disable-STEREO
+	--enable-crashmenu \
+	--disable-stereosound
 
 %{__make}
 
