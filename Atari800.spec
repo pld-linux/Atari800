@@ -40,7 +40,7 @@ Summary:	Atari 800 Emulator - common files for svgalib and X11 versions
 Summary(pl):	Emulator Atari 800 - pliki wspólne dla wersji svgalib oraz X11
 Group:		Applications/Emulators
 Obsoletes:	Atari800
-%if %{without license_agreement}
+%if !%{with license_agreement}
 Requires(post):	unzip
 %endif
 
@@ -49,7 +49,7 @@ This is Atari 800, 800XL, 130XE and 5200 emulator.
 
 This package contains common files for both svgalib and X11 versions
 of Atari800.
-%if %{without license_agreement}
+%if !%{with license_agreement}
 Note: because of license problems we had to include whole X-Former
 archive (xf25.zip). If you don't want it - rebuild Atari800 (--with
 license_agreement)
@@ -60,7 +60,7 @@ To jest emulator Atari 800, 800XL, 130XE i 5200.
 
 Ten pakiet zawiera pliki wspólne dla wersji dzia³aj±cych pod svgalib
 oraz X11.
-%if %{without license_agreement}
+%if !%{with license_agreement}
 Uwaga: z powodu problemów z licencj± musieli¶my za³±czyæ ca³± paczkê
 z emulatorem X-Former (xf25.zip). Je¶li jej nie chcesz w pakiecie -
 przebuduj pakiet z opcja --with license_agreement.
@@ -189,7 +189,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/atari800
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%if %{without license_agreement}
+%if !%{with license_agreement}
 %post common
 cd %{_datadir}/atari800
 if [ "`echo *.rom`" = "*.rom" ]; then
