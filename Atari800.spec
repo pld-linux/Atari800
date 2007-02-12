@@ -4,7 +4,7 @@
 %bcond_without	svga 			# without SVGA version
 #
 Summary:	Atari 800 Emulator
-Summary(pl):	Emulator Atari 800
+Summary(pl.UTF-8):   Emulator Atari 800
 Name:		Atari800
 Version:	2.0.2
 Release:	1
@@ -32,12 +32,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 This is Atari 800, 800XL, 130XE and 5200 emulator.
 
-%description -l pl
+%description -l pl.UTF-8
 To jest emulator Atari 800, 800XL, 130XE i 5200.
 
 %package common
 Summary:	Atari 800 Emulator - common files for svgalib and X11 versions
-Summary(pl):	Emulator Atari 800 - pliki wspólne dla wersji svgalib oraz X11
+Summary(pl.UTF-8):   Emulator Atari 800 - pliki wspÃ³lne dla wersji svgalib oraz X11
 Group:		Applications/Emulators
 Obsoletes:	Atari800
 %if !%{with license_agreement}
@@ -55,20 +55,20 @@ archive (xf25.zip). If you don't want it - rebuild Atari800 (--with
 license_agreement)
 %endif 
 
-%description common -l pl
+%description common -l pl.UTF-8
 To jest emulator Atari 800, 800XL, 130XE i 5200.
 
-Ten pakiet zawiera pliki wspólne dla wersji dzia³aj±cych pod svgalib
+Ten pakiet zawiera pliki wspÃ³lne dla wersji dziaÅ‚ajÄ…cych pod svgalib
 oraz X11.
 %if !%{with license_agreement}
-Uwaga: z powodu problemów z licencj± musieli¶my za³±czyæ ca³± paczkê
-z emulatorem X-Former (xf25.zip). Je¶li jej nie chcesz w pakiecie -
+Uwaga: z powodu problemÃ³w z licencjÄ… musieliÅ›my zaÅ‚Ä…czyÄ‡ caÅ‚Ä… paczkÄ™
+z emulatorem X-Former (xf25.zip). JeÅ›li jej nie chcesz w pakiecie -
 przebuduj pakiet z opcja --with license_agreement.
 %endif
 
 %package svga
 Summary:	Atari 800 Emulator - svgalib version
-Summary(pl):	Emulator Atari 800 - wersja pod svgalib
+Summary(pl.UTF-8):   Emulator Atari 800 - wersja pod svgalib
 License:	GPL
 Group:		Applications/Emulators
 Requires:	%{name}-common = %{version}-%{release}
@@ -79,15 +79,15 @@ This is Atari 800, 800XL, 130XE and 5200 emulator.
 This package contains Atari800 executable file configured for svgalib
 with sound and joystick support.
 
-%description svga -l pl
+%description svga -l pl.UTF-8
 To jest emulator Atari 800, 800XL, 130XE i 5200.
 
 Ten pakiet zawiera wykonywalny plik emulatora skonfigurowany dla
-svgalib z obs³ug± d¼wiêku i joysticka.
+svgalib z obsÅ‚ugÄ… dÅºwiÄ™ku i joysticka.
 
 %package x11
 Summary:	Atari 800 Emulator - X Window version
-Summary(pl):	Emulator Atari 800 - wersja pod X Window
+Summary(pl.UTF-8):   Emulator Atari 800 - wersja pod X Window
 License:	GPL
 Group:		Applications/Emulators
 Requires:	%{name}-common = %{version}-%{release}
@@ -98,15 +98,15 @@ This is Atari 800, 800XL, 130XE and 5200 emulator.
 This package contains Atari800 executable file configured for X11 with
 sound and joystick support.
 
-%description x11 -l pl
+%description x11 -l pl.UTF-8
 To jest emulator Atari 800, 800XL, 130XE i 5200.
 
 Ten pakiet zawiera wykonywalny plik emulatora skonfigurowany dla X11 z
-obs³ug± d¼wiêku i joysticka.
+obsÅ‚ugÄ… dÅºwiÄ™ku i joysticka.
 
 %package SDL
 Summary:	Atari 800 Emulator - SDL version
-Summary(pl):	Emulator Atari 800 - wersja pod SDL
+Summary(pl.UTF-8):   Emulator Atari 800 - wersja pod SDL
 License:	GPL
 Group:		Applications/Emulators
 Requires:	%{name}-common = %{version}-%{release}
@@ -117,11 +117,11 @@ This is Atari 800, 800XL, 130XE and 5200 emulator.
 This package contains Atari800 executable file configured for SDL with
 sound and joystick support.
 
-%description SDL -l pl
+%description SDL -l pl.UTF-8
 To jest emulator Atari 800, 800XL, 130XE i 5200.
 
 Ten pakiet zawiera wykonywalny plik emulatora skonfigurowany dla SDL z
-obs³ug± d¼wiêku i joysticka.
+obsÅ‚ugÄ… dÅºwiÄ™ku i joysticka.
 
 %prep
 %setup -q -n atari800-%{version}
