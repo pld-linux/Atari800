@@ -4,7 +4,7 @@
 %bcond_without	svga 			# without SVGA version
 #
 Summary:	Atari 800 Emulator
-Summary(pl.UTF-8):   Emulator Atari 800
+Summary(pl.UTF-8):	Emulator Atari 800
 Name:		Atari800
 Version:	2.0.2
 Release:	1
@@ -37,7 +37,7 @@ To jest emulator Atari 800, 800XL, 130XE i 5200.
 
 %package common
 Summary:	Atari 800 Emulator - common files for svgalib and X11 versions
-Summary(pl.UTF-8):   Emulator Atari 800 - pliki wspólne dla wersji svgalib oraz X11
+Summary(pl.UTF-8):	Emulator Atari 800 - pliki wspólne dla wersji svgalib oraz X11
 Group:		Applications/Emulators
 Obsoletes:	Atari800
 %if !%{with license_agreement}
@@ -68,7 +68,7 @@ przebuduj pakiet z opcja --with license_agreement.
 
 %package svga
 Summary:	Atari 800 Emulator - svgalib version
-Summary(pl.UTF-8):   Emulator Atari 800 - wersja pod svgalib
+Summary(pl.UTF-8):	Emulator Atari 800 - wersja pod svgalib
 License:	GPL
 Group:		Applications/Emulators
 Requires:	%{name}-common = %{version}-%{release}
@@ -87,7 +87,7 @@ svgalib z obsługą dźwięku i joysticka.
 
 %package x11
 Summary:	Atari 800 Emulator - X Window version
-Summary(pl.UTF-8):   Emulator Atari 800 - wersja pod X Window
+Summary(pl.UTF-8):	Emulator Atari 800 - wersja pod X Window
 License:	GPL
 Group:		Applications/Emulators
 Requires:	%{name}-common = %{version}-%{release}
@@ -106,7 +106,7 @@ obsługą dźwięku i joysticka.
 
 %package SDL
 Summary:	Atari 800 Emulator - SDL version
-Summary(pl.UTF-8):   Emulator Atari 800 - wersja pod SDL
+Summary(pl.UTF-8):	Emulator Atari 800 - wersja pod SDL
 License:	GPL
 Group:		Applications/Emulators
 Requires:	%{name}-common = %{version}-%{release}
