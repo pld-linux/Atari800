@@ -6,7 +6,7 @@ Summary:	Atari 800 Emulator
 Summary(pl.UTF-8):	Emulator Atari 800
 Name:		Atari800
 Version:	2.2.1
-Release:	1
+Release:	2
 License:	GPL v2+ (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Source0:	http://downloads.sourceforge.net/atari800/atari800-%{version}.tar.gz
