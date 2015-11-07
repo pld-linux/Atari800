@@ -5,12 +5,12 @@
 Summary:	Atari 800 Emulator
 Summary(pl.UTF-8):	Emulator Atari 800
 Name:		Atari800
-Version:	2.2.1
-Release:	3
+Version:	3.1.0
+Release:	1
 License:	GPL v2+ (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
 Source0:	http://downloads.sourceforge.net/atari800/atari800-%{version}.tar.gz
-# Source0-md5:	57c0b44207934c6109e64a56c2c83de0
+# Source0-md5:	354f8756a7f33cf5b7a56377d1759e41
 # NOTE: ROMs probably can be redistributed only in original XF25 archive
 Source1:	http://joy.sophics.cz/www/xf25.zip
 # Source1-md5:	4dc3b6b4313e9596c4d474785a37b94d
@@ -21,6 +21,7 @@ BuildRequires:	automake
 %if %{with license_agreement}
 BuildRequires:	unzip
 %endif
+BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -75,13 +76,13 @@ Requires:	%{name}-common = %{version}-%{release}
 This is Atari 800, 800XL, 130XE and 5200 emulator.
 
 This package contains Atari800 executable file configured for X11 with
-sound and joystick support.
+OSS sound and joystick support.
 
 %description x11 -l pl.UTF-8
 To jest emulator Atari 800, 800XL, 130XE i 5200.
 
 Ten pakiet zawiera wykonywalny plik emulatora skonfigurowany dla X11 z
-obsługą dźwięku i joysticka.
+obsługą dźwięku OSS i joysticka.
 
 %package SDL
 Summary:	Atari 800 Emulator - SDL version
@@ -112,24 +113,28 @@ rm config.sub
 cp -f /usr/share/automake/config.sub .
 
 %configure \
-	--target=sdl \
+	--target=x11-shm \
 	--enable-crashmenu \
-	--disable-stereosound
+	--disable-stereosound \
+	--with-sound=sdl \
+	--with-video=sdl
 
 %{__make}
 
-mv -f atari800 atari800-SDL
+%{__mv} atari800 atari800-SDL
 
 %{__make} clean
 
 %configure \
-	--target=shm \
+	--target=x11-shm \
 	--enable-crashmenu \
-	--disable-stereosound
+	--disable-stereosound \
+	--with-sound=oss \
+	--with-video=no
 
 %{__make}
 
-mv -f atari800 atari800-x11
+%{__mv} atari800 atari800-x11
 
 %install
 rm -rf $RPM_BUILD_ROOT
