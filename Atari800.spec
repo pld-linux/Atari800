@@ -5,12 +5,13 @@
 Summary:	Atari 800 Emulator
 Summary(pl.UTF-8):	Emulator Atari 800
 Name:		Atari800
-Version:	4.0.0
-Release:	3
+Version:	4.2.0
+Release:	1
 License:	GPL v2+ (Atari800), distributable if unmodified (xf25 with ROMs)
 Group:		Applications/Emulators
-Source0:	https://sourceforge.net/projects/atari800/files/atari800/%{version}/atari800-%{version}.tar.gz
-# Source0-md5:	72ba8e390a8fba7d087c2c089dae6d3c
+#Source0Download: https://github.com/atari800/atari800/releases
+Source0:	https://github.com/atari800/atari800/releases/download/ATARI800_4_2_0/atari800-%{version}-src.tgz
+# Source0-md5:	695031b9bc3461cd18ec9090779d984b
 # NOTE: ROMs probably can be redistributed only in original XF25 archive
 Source1:	http://joy.sophics.cz/www/xf25.zip
 # Source1-md5:	4dc3b6b4313e9596c4d474785a37b94d
@@ -39,7 +40,7 @@ Summary:	Atari 800 Emulator - common files for SDL and X11 versions
 Summary(pl.UTF-8):	Emulator Atari 800 - pliki wspólne dla wersji SDL oraz X11
 Group:		Applications/Emulators
 Obsoletes:	Atari800
-%if !%{with license_agreement}
+%if %{without license_agreement}
 Requires(post):	unzip
 %endif
 
@@ -48,7 +49,7 @@ This is Atari 800, 800XL, 130XE and 5200 emulator.
 
 This package contains common files for both SDL and X11 versions
 of Atari800.
-%if !%{with license_agreement}
+%if %{without license_agreement}
 Note: because of license problems we had to include whole X-Former
 archive (xf25.zip). If you don't want it - rebuild Atari800 (--with
 license_agreement)
@@ -59,7 +60,7 @@ To jest emulator Atari 800, 800XL, 130XE i 5200.
 
 Ten pakiet zawiera pliki wspólne dla wersji działających pod SDL
 oraz X11.
-%if !%{with license_agreement}
+%if %{without license_agreement}
 Uwaga: z powodu problemów z licencją musieliśmy załączyć całą paczkę
 z emulatorem X-Former (xf25.zip). Jeśli jej nie chcesz w pakiecie -
 przebuduj pakiet z opcja --with license_agreement.
@@ -108,42 +109,42 @@ obsługą dźwięku i joysticka.
 %setup -q -n atari800-%{version}
 
 %build
-cd src
-rm config.sub
 cp -f /usr/share/automake/config.sub .
 
 %configure \
-	--target=x11-shm \
+	--target=default \
 	--enable-crashmenu \
+	--disable-silent-rules \
 	--disable-stereosound \
 	--with-sound=sdl \
 	--with-video=sdl
 
 %{__make}
 
-%{__mv} atari800 atari800-SDL
+%{__mv} src/atari800 atari800-SDL
 
 %{__make} clean
 
 %configure \
 	--target=x11-shm \
 	--enable-crashmenu \
+	--disable-silent-rules \
 	--disable-stereosound \
 	--with-sound=oss \
-	--with-video=no
+	--with-video=yes
 
 %{__make}
 
-%{__mv} atari800 atari800-x11
+%{__mv} src/atari800 atari800-x11
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/atari800,%{_mandir}/man1}
 
-install src/atari800-x11 $RPM_BUILD_ROOT%{_bindir}
-install src/atari800-SDL $RPM_BUILD_ROOT%{_bindir}
-install %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/atari800
-install src/atari800.man $RPM_BUILD_ROOT%{_mandir}/man1/atari800.1
+install atari800-x11 $RPM_BUILD_ROOT%{_bindir}
+install atari800-SDL $RPM_BUILD_ROOT%{_bindir}
+cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/atari800
+cp -p src/atari800.man $RPM_BUILD_ROOT%{_mandir}/man1/atari800.1
 
 %if %{with license_agreement}
 unzip -q -L %{SOURCE1} -d $RPM_BUILD_ROOT%{_datadir}/atari800
@@ -155,7 +156,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/atari800
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%if !%{with license_agreement}
+%if %{without license_agreement}
 %post common
 cd %{_datadir}/atari800
 if [ "`echo *.rom`" = "*.rom" ]; then
@@ -167,7 +168,7 @@ fi
 
 %files common
 %defattr(644,root,root,755)
-%doc DOC/{BUGS,CREDITS,ChangeLog,FAQ,NEWS,README,TODO,USAGE,*.txt} README.1ST
+%doc DOC/{BUGS,CREDITS,ChangeLog,FAQ,NEWS,README,TODO,USAGE,*.txt} README.TXT
 %attr(755,root,root) %{_bindir}/atari800
 %{_datadir}/atari800
 %{_mandir}/man1/atari800.1*
