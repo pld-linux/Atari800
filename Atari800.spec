@@ -9,9 +9,12 @@ Group:		Applications/Emulators
 Source0:	https://github.com/atari800/atari800/releases/download/ATARI800_4_2_0/atari800-%{version}-src.tgz
 # Source0-md5:	695031b9bc3461cd18ec9090779d984b
 Source1:	%{name}-chooser
+Patch0:		%{name}-romdir.patch
 URL:		https://atari800.github.io/
-BuildRequires:	SDL-devel
+BuildRequires:	SDL-devel >= 1.2
 BuildRequires:	automake
+BuildRequires:	libpng-devel
+BuildRequires:	readline-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	zlib-devel
@@ -85,6 +88,7 @@ obsługą dźwięku i joysticka.
 
 %prep
 %setup -q -n atari800-%{version}
+%patch0 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .

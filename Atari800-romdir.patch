@@ -1,0 +1,37 @@
+--- atari800-4.2.0/src/atari.c.orig	2019-12-28 18:00:29.000000000 +0100
++++ atari800-4.2.0/src/atari.c	2021-01-13 19:52:18.770209441 +0100
+@@ -423,24 +423,19 @@
+ 	/* try to find ROM images if the configuration file is not found
+ 	   or it does not specify some ROM paths (blank paths count as specified) */
+ #ifndef ANDROID
+-	SYSROM_FindInDir(".", TRUE); /* current directory */
+ #if defined(unix) || defined(__unix__) || defined(__linux__)
+ 	SYSROM_FindInDir("/usr/share/atari800", TRUE);
++#else
++	SYSROM_FindInDir(".", TRUE); /* current directory */
+ #endif
+-	if (*argc > 0 && argv[0] != NULL) {
+-		char atari800_exe_dir[FILENAME_MAX];
+-		char atari800_exe_rom_dir[FILENAME_MAX];
+-		/* the directory of the Atari800 program */
+-		Util_splitpath(argv[0], atari800_exe_dir, NULL);
+-		SYSROM_FindInDir(atari800_exe_dir, TRUE);
+-		/* "rom" and "ROM" subdirectories of this directory */
+-		Util_catpath(atari800_exe_rom_dir, atari800_exe_dir, "rom");
+-		SYSROM_FindInDir(atari800_exe_rom_dir, TRUE);
+-/* skip "ROM" on systems that are known to be case-insensitive */
+-#if !defined(DJGPP) && !defined(HAVE_WINDOWS_H)
+-		Util_catpath(atari800_exe_rom_dir, atari800_exe_dir, "ROM");
+-		SYSROM_FindInDir(atari800_exe_rom_dir, TRUE);
+-#endif
++	{
++		char rom_dir[FILENAME_MAX];
++		char *home = getenv("HOME");
++		if (home != NULL)
++			Util_catpath(rom_dir, home, ".atari800");
++		else
++			strcpy(rom_dir, ".atari800");
++		SYSROM_FindInDir(rom_dir, TRUE);
+ 	}
+ #endif /* ANDROID */
+ 
