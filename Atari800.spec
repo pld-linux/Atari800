@@ -1,27 +1,17 @@
-#
-# Conditional build:
-%bcond_with	license_agreement	# with unzipped ROM files instead of xf25.zip
-#
 Summary:	Atari 800 Emulator
 Summary(pl.UTF-8):	Emulator Atari 800
 Name:		Atari800
 Version:	4.2.0
 Release:	1
-License:	GPL v2+ (Atari800), distributable if unmodified (xf25 with ROMs)
+License:	GPL v2+
 Group:		Applications/Emulators
 #Source0Download: https://github.com/atari800/atari800/releases
 Source0:	https://github.com/atari800/atari800/releases/download/ATARI800_4_2_0/atari800-%{version}-src.tgz
 # Source0-md5:	695031b9bc3461cd18ec9090779d984b
-# NOTE: ROMs probably can be redistributed only in original XF25 archive
-Source1:	http://joy.sophics.cz/www/xf25.zip
-# Source1-md5:	4dc3b6b4313e9596c4d474785a37b94d
-Source2:	%{name}-chooser
+Source1:	%{name}-chooser
 URL:		https://atari800.github.io/
 BuildRequires:	SDL-devel
 BuildRequires:	automake
-%if %{with license_agreement}
-BuildRequires:	unzip
-%endif
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	zlib-devel
@@ -39,32 +29,20 @@ To jest emulator Atari 800, 800XL, 130XE i 5200.
 Summary:	Atari 800 Emulator - common files for SDL and X11 versions
 Summary(pl.UTF-8):	Emulator Atari 800 - pliki wspólne dla wersji SDL oraz X11
 Group:		Applications/Emulators
-Obsoletes:	Atari800
-%if %{without license_agreement}
-Requires(post):	unzip
-%endif
+Suggests:	Atari800-rom
+Obsoletes:	Atari800 < 1.0.7
 
 %description common
 This is Atari 800, 800XL, 130XE and 5200 emulator.
 
 This package contains common files for both SDL and X11 versions
 of Atari800.
-%if %{without license_agreement}
-Note: because of license problems we had to include whole X-Former
-archive (xf25.zip). If you don't want it - rebuild Atari800 (--with
-license_agreement)
-%endif 
 
 %description common -l pl.UTF-8
 To jest emulator Atari 800, 800XL, 130XE i 5200.
 
 Ten pakiet zawiera pliki wspólne dla wersji działających pod SDL
 oraz X11.
-%if %{without license_agreement}
-Uwaga: z powodu problemów z licencją musieliśmy załączyć całą paczkę
-z emulatorem X-Former (xf25.zip). Jeśli jej nie chcesz w pakiecie -
-przebuduj pakiet z opcja --with license_agreement.
-%endif
 
 %package x11
 Summary:	Atari 800 Emulator - X Window version
@@ -91,7 +69,7 @@ Summary(pl.UTF-8):	Emulator Atari 800 - wersja SDL
 License:	GPL
 Group:		Applications/Emulators
 Requires:	%{name}-common = %{version}-%{release}
-Obsoletes:	Atari800-svga
+Obsoletes:	Atari800-svga < 2.1.0
 
 %description SDL
 This is Atari 800, 800XL, 130XE and 5200 emulator.
@@ -143,34 +121,17 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/atari800,%{_mandir}/man1}
 
 install atari800-x11 $RPM_BUILD_ROOT%{_bindir}
 install atari800-SDL $RPM_BUILD_ROOT%{_bindir}
-cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/atari800
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/atari800
 cp -p src/atari800.man $RPM_BUILD_ROOT%{_mandir}/man1/atari800.1
-
-%if %{with license_agreement}
-unzip -q -L %{SOURCE1} -d $RPM_BUILD_ROOT%{_datadir}/atari800
-%{__rm} $RPM_BUILD_ROOT%{_datadir}/atari800/xf25.*
-%else
-install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/atari800
-%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-
-%if %{without license_agreement}
-%post common
-cd %{_datadir}/atari800
-if [ "`echo *.rom`" = "*.rom" ]; then
-	umask 022
-	unzip -q -L xf25.zip
-	rm -f xf25.doc xf25.exe
-fi
-%endif
 
 %files common
 %defattr(644,root,root,755)
 %doc DOC/{BUGS,CREDITS,ChangeLog,FAQ,NEWS,README,TODO,USAGE,*.txt} README.TXT
 %attr(755,root,root) %{_bindir}/atari800
-%{_datadir}/atari800
+%dir %{_datadir}/atari800
 %{_mandir}/man1/atari800.1*
 
 %files x11
