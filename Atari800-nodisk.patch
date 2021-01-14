@@ -1,0 +1,15 @@
+Allows disk flip autodetection in "The Big Demo" to work
+(disk1 -> empty -> disk2 cycle and the opposite)
+--- atari800-4.2.0/src/sio.c.orig	2019-12-28 18:00:29.000000000 +0100
++++ atari800-4.2.0/src/sio.c	2021-01-14 17:31:08.961358709 +0100
+@@ -1083,7 +1083,9 @@
+ 		Log_print("Drive Status unit %d %x %x %x %x",unit,buffer[0], buffer[1], buffer[2], buffer[3]);
+ 		return 'C';
+ 	}	
+-	buffer[0] = 16;         /* drive active */
++       /* DVSTAT0 bit 4: drive active(?)/motor on;
++          "The Big Demo" expects 0->1 trigger to detect disk insertion after "flip the disk" message */
++	buffer[0] = disk[unit] != NULL ? 16 : 0;
+ 	buffer[1] = disk[unit] != NULL ? 255 /* WD 177x OK */ : 127 /* no disk */;
+ 	if (io_success[unit] != 0)
+ 		buffer[0] |= 4;     /* failed RW-operation */

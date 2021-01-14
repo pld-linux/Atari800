@@ -10,6 +10,7 @@ Source0:	https://github.com/atari800/atari800/releases/download/ATARI800_4_2_0/a
 # Source0-md5:	695031b9bc3461cd18ec9090779d984b
 Source1:	%{name}-chooser
 Patch0:		%{name}-romdir.patch
+Patch1:		%{name}-nodisk.patch
 URL:		https://atari800.github.io/
 BuildRequires:	SDL-devel >= 1.2
 BuildRequires:	automake
@@ -50,7 +51,6 @@ oraz X11.
 %package x11
 Summary:	Atari 800 Emulator - X Window version
 Summary(pl.UTF-8):	Emulator Atari 800 - wersja dla systemu X Window
-License:	GPL
 Group:		Applications/Emulators
 Requires:	%{name}-common = %{version}-%{release}
 
@@ -69,7 +69,6 @@ obsługą dźwięku OSS i joysticka.
 %package SDL
 Summary:	Atari 800 Emulator - SDL version
 Summary(pl.UTF-8):	Emulator Atari 800 - wersja SDL
-License:	GPL
 Group:		Applications/Emulators
 Requires:	%{name}-common = %{version}-%{release}
 Obsoletes:	Atari800-svga < 2.1.0
@@ -89,6 +88,7 @@ obsługą dźwięku i joysticka.
 %prep
 %setup -q -n atari800-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
