@@ -1,13 +1,13 @@
 Summary:	Atari 800 Emulator
 Summary(pl.UTF-8):	Emulator Atari 800
 Name:		Atari800
-Version:	4.2.0
+Version:	5.0.0
 Release:	1
 License:	GPL v2+
 Group:		Applications/Emulators
 #Source0Download: https://github.com/atari800/atari800/releases
-Source0:	https://github.com/atari800/atari800/releases/download/ATARI800_4_2_0/atari800-%{version}-src.tgz
-# Source0-md5:	695031b9bc3461cd18ec9090779d984b
+Source0:	https://github.com/atari800/atari800/releases/download/ATARI800_5_0_0/atari800-%{version}-src.tgz
+# Source0-md5:	f5dc10d461d0241a5978a0998028e49a
 Source1:	%{name}-chooser
 Patch0:		%{name}-romdir.patch
 Patch1:		%{name}-nodisk.patch
@@ -87,7 +87,7 @@ obsługą dźwięku i joysticka.
 
 %prep
 %setup -q -n atari800-%{version}
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
 
 %build
